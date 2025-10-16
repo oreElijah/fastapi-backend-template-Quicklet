@@ -64,7 +64,8 @@ class House(SQLModel, table=True):
     bathroom: int
     price_per_night: float
     description: str
-    Available: bool
+    house_image_url: Optional[str] = None
+    available: bool
     rating: float = Field(lt=6,gt=-1, default=0, sa_column=Column(pg.FLOAT))
     user_uid: uuid.UUID = Field(
         default=None,

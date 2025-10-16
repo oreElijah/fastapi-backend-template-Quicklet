@@ -21,6 +21,10 @@ class Setting(BaseSettings):
     SUCCESS_URL: str
     CANCEL_URL: str
     STRIPE_WEBHOOK_SECRET: str
+    B2_KEY_ID: str
+    B2_APPLICATION_KEY: str
+    B2_BUCKET_NAME: str = "Quicklet"
+    B2_BUCKET_ID: str
 
     model_config = SettingsConfigDict(
         env_file=".env",

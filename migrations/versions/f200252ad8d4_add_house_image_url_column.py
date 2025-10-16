@@ -1,8 +1,8 @@
-"""updating House model
+"""add house_image_url column
 
-Revision ID: 143ff21151db
-Revises: fc5135156212
-Create Date: 2025-10-16 14:03:35.562804
+Revision ID: f200252ad8d4
+Revises: d932369ca66c
+Create Date: 2025-10-16 20:00:28.494231
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '143ff21151db'
-down_revision: Union[str, Sequence[str], None] = 'fc5135156212'
+revision: str = 'f200252ad8d4'
+down_revision: Union[str, Sequence[str], None] = 'd932369ca66c'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
