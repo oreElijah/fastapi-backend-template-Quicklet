@@ -9,7 +9,7 @@ from .schema import (UserCreateModel, UserLoginModel, UserModel,
                      RoleUpdateModel)
 from .service import UserService
 from .utils import create_url_safe_token, verify_password, create_access_token, decode_url_safe_token, hash_password
-from .dependencies import RoleChecker, get_current_user, AccessTokenBearer
+from .dependencies import RoleChecker, get_current_user, AccessTokenBearer, RefreshTokenBearer
 from src.db.main import get_session
 from src.db.redis import add_jti_to_blocklist
 from src.config import Config
@@ -218,7 +218,7 @@ async def reset_password(token: str, model: ResetPasswordModel, session: AsyncSe
     )
 
 @auth_router.post("/refresh")
-async def refresh_token(token_detail: dict= Depends(AccessTokenBearer())):
+async def refresh_token(token_detail: dict= Depends(RefreshTokenBearer())):
     if token_detail.get("refresh"):
         new_access_token = create_access_token(
             user_data={
