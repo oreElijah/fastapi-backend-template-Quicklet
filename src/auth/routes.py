@@ -43,27 +43,27 @@ async def create_user(user_model: UserCreateModel, background_tasks: BackgroundT
         )
     
     else:
-       user = await user_service.create_user(user_model, session)
+        user = await user_service.create_user(user_model, session)
 
-       token = create_url_safe_token({'email': user.email})
+        token = create_url_safe_token({'email': user.email})
 
-       link = f"http://{Config.DOMAIN}/api/v1/auth/verify/{token}"
-       html_message = f"""
-      <h1>Verify your email</h1>
-      <p> Please click the link below to verify your email address:</p>
-      <a href="{link}">Verify Email</a>
-      """
-       message = create_message(
-          subject="Welcome to Shortlet",
+        link = f"http://{Config.DOMAIN}/api/v1/auth/verify/{token}"
+        html_message = f"""
+        <h1>Verify your email</h1>
+        <p> Please click the link below to verify your email address:</p>
+        <a href="{link}">Verify Email</a>
+        """
+        message = create_message(
+            subject="Welcome to Shortlet",
             recipients=[user_model.email],
             body=html_message
-       )
-       background_tasks.add_task(mails.send_message, message)
+        )
+        background_tasks.add_task(mails.send_message, message)
 
-       return {
-          "message": "Account Created! Check email to verify your account",
-          "user": user
-       }
+        return {
+            "message": "Account Created! Check email to verify your account",
+            "user": user
+        }
 
 @auth_router.get("/verify/{token}")
 async def verify_email(token: str, session: AsyncSession= Depends(get_session)):

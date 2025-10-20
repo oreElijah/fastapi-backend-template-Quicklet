@@ -72,8 +72,8 @@ async def search(    address: str | None = None,
     bathroom: int | None = None,
 
     session: AsyncSession= Depends(get_session), token_details: dict= Depends(AccessTokenBearer())):
-    
-    values = [address, price_min, price_max, state, bedroom, bathroom]
+
+    values = { "address": address, "price_min": price_min, "price_max": price_max, "state": state, "bedroom": bedroom, "bathroom": bathroom }
     stmt = await house_service.search_houses(values, session)
     
     return stmt

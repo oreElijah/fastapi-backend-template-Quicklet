@@ -13,7 +13,7 @@ class HouseModel(BaseModel):
     bathroom: int
     price_per_night: float
     description: str
-    Available: bool = True
+    available: bool = True
     user_uid: uuid.UUID
     created_at: datetime
 
@@ -56,4 +56,4 @@ class HouseUpdateModel(BaseModel):
     address: Optional[str]
     price_per_night: Optional[float]
     description: Optional[str]
-    Available: Optional[bool]
+    available: Optional[bool]

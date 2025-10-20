@@ -77,7 +77,7 @@ class HouseService:
         return house_data
 
     async def search_houses(self, values: dict, session: AsyncSession):
-        query = select(House).where(House.Available == True)
+        query = select(House).where(House.available == True)
 
 
         address = values.get("address")
@@ -95,9 +95,9 @@ class HouseService:
                 )
             )
         if bedroom:
-            query = query.where(House.bedroom == bedroom)
+            query = query.where(House.bedroom <= bedroom)
         if bathroom:
-            query = query.where(House.bathroom == bathroom)
+            query = query.where(House.bathroom >= bathroom)
         if price_min:
             query = query.where(House.price_per_night >= price_min)
         if price_max:

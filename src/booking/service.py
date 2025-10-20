@@ -24,7 +24,7 @@ class BookingService:
             (
                 (Booking.start_date <= end_date) &
                 (Booking.end_date >= start_date)&
-                (House.Available==True)
+                (House.available==True)
             )
         )
         result = await session.exec(stmt)
@@ -50,7 +50,7 @@ class BookingService:
         new_booking.amount =amount
         new_booking.expires_at = expires_at
         session.add(new_booking)
-        house.Available=False
+        house.available=False
         await session.commit()
         await session.refresh(new_booking)
         return new_booking
@@ -106,12 +106,12 @@ class BookingService:
         booking = await self.get_specific_booking(booking_uid, session)
         
         house = await house_service.get_house_by_id(booking.house_uid, session)
-        if house.Available==True:
+        if house.available==True:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="The shortlet booking you're trying to cancel isn't booked"
                 )
-        house.Available = True
+        house.available = True
         booking.status="canceled"
         booking.expires_at = None
         
@@ -123,7 +123,7 @@ class BookingService:
                 status_code=status.HTTP_200_OK,
                 content= {
                     "message": "The shortlet you booked has been canceled",
-                    "House Availability": house.Available
+                    "House Availability": house.available
                 }
             )
         
@@ -161,7 +161,7 @@ class BookingService:
             await mails.send_message(user_message)
             await mails.send_message(host_message)
 
-            house.Available = True
+            house.available = True
             session.add(house)
             await session.commit()
             return date.date()

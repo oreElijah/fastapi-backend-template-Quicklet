@@ -6,13 +6,13 @@ from src.db.models import User
 from .schema import UserCreateModel
 
 class UserService:
-    async def get_user_by_email(self,email:str, session: AsyncSession):
-        statement = select(User).where(User.email==email)
-        
-        result = await session.exec(statement)
+    async def get_user_by_email(self, email: str, session: AsyncSession):
+        query = select(User).where(User.email == email)
+        result = await session.exec(query)
         user = result.first()
-    
-        return user if user is not None else "something went wrong"
+        print("Fetched user by email:", user)
+        return user
+
 
     async def get_user_by_id(self,uid:str, session: AsyncSession):
         statement = select(User).where(User.uid==uid)
