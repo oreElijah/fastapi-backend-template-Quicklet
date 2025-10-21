@@ -49,7 +49,7 @@ async def book_house( booking_model: BookingCreateModel,
     booking_model.end_date = to_naive_utc(booking_model.end_date)
     booking = await booking_service.book_house(booking_model, session)
     if not booking:
-        raise HTTPException(status_code=400, detail="Booking failed")
+        raise HTTPException(status_code=400, detail="Booking failed, House is already booked for the selected dates")
     def _create_session():
         return stripe.checkout.Session.create(
             payment_method_types=["card"],
